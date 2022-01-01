@@ -1,16 +1,37 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from Passenger import Passenger
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def input_passenger():
+    name = input('Input the passengers name: ')
+    weight = input('Input the passengers weight: ')
+    person = Passenger(name, float(weight))
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def check_input(answer):
+    if answer == 'Yes' or answer == 'No':
+        return True
+    return False
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+next_pas_check = True
+
+while next_pas_check:
+    input_passenger()
+    check = input('Would you like to add more passengers? (Yes/No): ')
+    if not check_input(check):
+        print('Incorrect answer')
+        continue
+    if check == 'No':
+        next_pas_check = False
+
+
+def weight_count():
+    pass
+
+
+def floor_input():
+    pass
+
+
+# person = Passenger('Oleg', 14)
+# print(person.name, person.weight)
