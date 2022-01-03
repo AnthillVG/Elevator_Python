@@ -1,17 +1,12 @@
 from Passenger import Passenger
+from Elevator import Elevator
+
+elevator = Elevator()
 
 
-passenger_names = []
-passenger_weights = []
-floors = []
-
-
-def input_passenger():
-    Passenger.name = input('Input the passengers name: ')
-    Passenger.weight = input('Input the passengers weight: ')
-    # person = Passenger(name, float(weight))
-    passenger_names.append(Passenger.name)
-    passenger_weights.append(Passenger.weight)
+def new_passenger():
+    person = Passenger(input("Input the passenger's name: "), float(input("Input the passenger's weight: ")))
+    elevator.add_passenger(person)
 
 
 def check_input(answer):
@@ -20,34 +15,34 @@ def check_input(answer):
     return False
 
 
-next_pas_check = True
-while next_pas_check:
-    input_passenger()
-    check = input('Would you like to add a passenger? (Yes/No): ')
-    check = check.lower()
-    if not check_input(check):
-        while not check_input(check):
-            check = input('Incorrect answer. Please, try again: ')
-    if check == 'no':
-        next_pas_check = False
+def overload_check():
+    if elevator.is_overloaded():
+        print('The elevator is overloaded.')
+        quit()
 
 
-def weight_count():
-    for i in range(0, len(passenger_weights)):
-        pass
+def elevator_passengers():
+    next_pas_check = True
+    while next_pas_check:
+        new_passenger()
+        check = input('Would you like to add a passenger? (Yes/No): ').lower()
+        if not check_input(check):
+            while not check_input(check):
+                check = input('Incorrect answer. Please, try again. (Yes/No): ')
+        if check == 'no':
+            next_pas_check = False
 
 
-def floor_input():
-    for i in range(0, len(passenger_names)):
-        floor = input('What floor does passenger ' + passenger_names[i] + ' go to? ')
-        floors.append(floor)
+def floor_print():
+    floor_list = elevator.elevator_moving()
+    for floor in floor_list:
+        left_passengers_list = ''
+        for passenger in floor_list[floor]:
+            left_passengers_list += passenger.name + ', '
+        print('On floor ' + str(floor) + ' left: ' + left_passengers_list.strip(', '))
 
 
-floor_input()
-print(passenger_names)
-print(passenger_weights)
-print(floors)
-
-
-# person = Passenger('Oleg', 14)
-# print(person.name, person.weight)
+elevator_passengers()
+overload_check()
+elevator.floor_selection()
+floor_print()
